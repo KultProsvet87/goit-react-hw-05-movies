@@ -1,17 +1,16 @@
 import { getData, movieByIdParams } from 'components/API/Api';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const Cast = () => {
   const [cast, setCast] = useState({ cast: [] });
-  const location = useLocation();
-  const movieId = location.state.movieID;
+  const { movieID } = useParams();
 
   useEffect(() => {
-    movieByIdParams.END_POINT = `movie/${movieId}/credits`;
+    movieByIdParams.END_POINT = `movie/${movieID}/credits`;
 
     getData(movieByIdParams, setCast);
-  }, [movieId]);
+  }, [movieID]);
 
   return (
     <>

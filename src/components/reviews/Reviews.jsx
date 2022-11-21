@@ -1,17 +1,17 @@
 import { getData, movieByIdParams } from 'components/API/Api';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState({ results: [] });
-  const location = useLocation();
-  const movieId = location.state.movieID;
+
+  const { movieID } = useParams();
 
   useEffect(() => {
-    movieByIdParams.END_POINT = `movie/${movieId}/reviews`;
+    movieByIdParams.END_POINT = `movie/${movieID}/reviews`;
 
     getData(movieByIdParams, setReviews);
-  }, [movieId]);
+  }, [movieID]);
 
   return (
     <>

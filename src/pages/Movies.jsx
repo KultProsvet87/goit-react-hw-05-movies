@@ -1,40 +1,37 @@
 import { getData, movieSearchParams } from 'components/API/Api';
 import { MovieList } from 'components/movieList/MovieList';
+import { SearchForm } from 'components/searchForm/searchForm';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export const Movies = () => {
+  const [isSubmit, setIsSubmit] = useState(true);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query') ?? '');
   const [movieList, setMovieList] = useState({ results: [] });
+  const location = useLocation();
 
   useEffect(() => {
-    if (!searchParams.get('query')) return;
+    if (!isSubmit) return;
+    setIsSubmit(false);
 
-    movieSearchParams.params.query = query;
-    getData(movieSearchParams, setMovieList);
-  }, []);
-
-  const handleChange = e => {
-    const { value } = e.currentTarget;
-    setQuery(value);
-    setSearchParams(value ? { query: value } : '');
-  };
-
-  const handleSubmite = e => {
-    e.preventDefault();
+    const query = searchParams.get('query');
     if (!query) return;
+
     movieSearchParams.params.query = query;
     getData(movieSearchParams, setMovieList);
-  };
+  }, [isSubmit, searchParams]);
 
   return (
     <>
-      <form onSubmit={handleSubmite}>
-        <input name="query" type="text" value={query} onChange={handleChange} />
-        <button type="submite">Search</button>
-      </form>
-      <MovieList movieList={movieList.results} />
+      <SearchForm
+        setQuery={setQuery}
+        query={query}
+        setSearchParams={setSearchParams}
+        setIsSubmit={setIsSubmit}
+      />
+      <MovieList movieList={movieList.results} location={location} />
     </>
   );
 };

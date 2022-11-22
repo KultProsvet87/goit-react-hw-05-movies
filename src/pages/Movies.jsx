@@ -4,7 +4,7 @@ import { SearchForm } from 'components/searchForm/searchForm';
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-export const Movies = () => {
+const Movies = () => {
   const [isSubmit, setIsSubmit] = useState(true);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,3 +35,5 @@ export const Movies = () => {
     </>
   );
 };
+
+export default Movies;

@@ -1,3 +1,5 @@
+import { SearchBtn, SearchInput, StyledForm } from './SearchForm.styled';
+
 export const SearchForm = ({
   setQuery,
   setSearchParams,
@@ -16,9 +18,14 @@ export const SearchForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmite}>
-      <input name="query" type="text" value={query} onChange={handleChange} />
-      <button type="submite">Search</button>
-    </form>
+    <StyledForm onSubmit={handleSubmite}>
+      <SearchInput
+        name="query"
+        type="text"
+        value={query}
+        onChange={handleChange}
+      />
+      <SearchBtn type="submite">Search</SearchBtn>
+    </StyledForm>
   );
 };
